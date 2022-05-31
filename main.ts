@@ -47,9 +47,21 @@ function two () {
     pins.digitalWritePin(DigitalPin.P15, 1)
 }
 if (pins.digitalReadPin(DigitalPin.P16) == 1 && input.pinIsPressed(TouchPin.P0)) {
-    pins.digitalWritePin(DigitalPin.P1, 1)
+    clear_screen()
+    four()
+    control.waitMicros(1000)
+    three()
+    control.waitMicros(1000)
+    two()
+    control.waitMicros(1000)
+    one()
+    control.waitMicros(1000)
+    zero()
+    control.waitMicros(1000)
+    clear_screen()
+    pins.digitalWritePin(DigitalPin.P8, 1)
 } else {
-    pins.digitalWritePin(DigitalPin.P1, 0)
+    clear_screen()
 }
 basic.forever(function () {
     pins.digitalWritePin(DigitalPin.P8, 1)
