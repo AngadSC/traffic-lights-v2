@@ -1,3 +1,4 @@
+let trigger = 0
 function zero () {
     pins.digitalWritePin(DigitalPin.P1, 1)
     pins.digitalWritePin(DigitalPin.P2, 1)
@@ -46,34 +47,32 @@ function two () {
     pins.digitalWritePin(DigitalPin.P14, 1)
     pins.digitalWritePin(DigitalPin.P15, 1)
 }
-if (pins.digitalReadPin(DigitalPin.P16) == 1 && input.pinIsPressed(TouchPin.P0)) {
-    clear_screen()
-    four()
-    control.waitMicros(1000)
-    three()
-    control.waitMicros(1000)
-    two()
-    control.waitMicros(1000)
-    one()
-    control.waitMicros(1000)
-    zero()
-    control.waitMicros(1000)
-    clear_screen()
-    pins.digitalWritePin(DigitalPin.P8, 1)
-} else {
-    clear_screen()
-}
 basic.forever(function () {
-    pins.digitalWritePin(DigitalPin.P8, 1)
-    pins.digitalWritePin(DigitalPin.P11, 0)
-    pins.digitalWritePin(DigitalPin.P16, 0)
+    pins.analogWritePin(AnalogPin.P8, 0)
+    pins.analogWritePin(AnalogPin.P11, 0)
+    pins.analogWritePin(AnalogPin.P16, 1023)
+    trigger = 0
     basic.pause(4000)
-    pins.digitalWritePin(DigitalPin.P8, 0)
-    pins.digitalWritePin(DigitalPin.P11, 1)
-    pins.digitalWritePin(DigitalPin.P16, 0)
+    pins.analogWritePin(AnalogPin.P8, 0)
+    pins.analogWritePin(AnalogPin.P11, 1023)
+    pins.analogWritePin(AnalogPin.P16, 0)
+    trigger = 0
     basic.pause(1000)
-    pins.digitalWritePin(DigitalPin.P8, 0)
-    pins.digitalWritePin(DigitalPin.P11, 0)
-    pins.digitalWritePin(DigitalPin.P16, 1)
+    pins.analogWritePin(AnalogPin.P8, 1023)
+    pins.analogWritePin(AnalogPin.P11, 0)
+    pins.analogWritePin(AnalogPin.P16, 0)
+    trigger = 1
     basic.pause(5000)
+})
+basic.forever(function () {
+	
+})
+basic.forever(function () {
+    if (trigger == 1 && input.pinIsPressed(TouchPin.P0)) {
+        pins.analogWritePin(AnalogPin.P1, 1023)
+        control.waitMicros(5000)
+    }
+    if (trigger == 0) {
+        pins.analogWritePin(AnalogPin.P1, 0)
+    }
 })
