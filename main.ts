@@ -1,52 +1,78 @@
 let trigger = 0
 function zero () {
-    pins.digitalWritePin(DigitalPin.P1, 1)
-    pins.digitalWritePin(DigitalPin.P2, 1)
-    pins.digitalWritePin(DigitalPin.P12, 1)
-    pins.digitalWritePin(DigitalPin.P13, 1)
-    pins.digitalWritePin(DigitalPin.P14, 1)
-    pins.digitalWritePin(DigitalPin.P15, 1)
+    pins.analogWritePin(AnalogPin.P1, 1023)
+    pins.analogWritePin(AnalogPin.P2, 1023)
+    pins.analogWritePin(AnalogPin.P12, 1023)
+    pins.analogWritePin(AnalogPin.P13, 1023)
+    pins.analogWritePin(AnalogPin.P14, 1023)
+    pins.analogWritePin(AnalogPin.P15, 1023)
+    pins.analogWritePin(AnalogPin.P5, 0)
 }
 function one () {
-    pins.digitalWritePin(DigitalPin.P2, 1)
-    pins.digitalWritePin(DigitalPin.P13, 1)
+    pins.analogWritePin(AnalogPin.P2, 1023)
+    pins.analogWritePin(AnalogPin.P13, 1023)
+    pins.analogWritePin(AnalogPin.P1, 0)
+    pins.analogWritePin(AnalogPin.P5, 0)
+    pins.analogWritePin(AnalogPin.P14, 0)
+    pins.analogWritePin(AnalogPin.P15, 0)
+    pins.analogWritePin(AnalogPin.P12, 0)
 }
 function clear_screen () {
-    pins.digitalWritePin(DigitalPin.P1, 0)
-    pins.digitalWritePin(DigitalPin.P2, 0)
-    pins.digitalWritePin(DigitalPin.P5, 0)
-    pins.digitalWritePin(DigitalPin.P12, 0)
-    pins.digitalWritePin(DigitalPin.P13, 0)
-    pins.digitalWritePin(DigitalPin.P14, 0)
-    pins.digitalWritePin(DigitalPin.P15, 0)
+    pins.analogWritePin(AnalogPin.P1, 0)
+    pins.analogWritePin(AnalogPin.P2, 0)
+    pins.analogWritePin(AnalogPin.P5, 0)
+    pins.analogWritePin(AnalogPin.P12, 0)
+    pins.analogWritePin(AnalogPin.P13, 0)
+    pins.analogWritePin(AnalogPin.P14, 0)
+    pins.analogWritePin(AnalogPin.P15, 0)
 }
 function three () {
-    pins.digitalWritePin(DigitalPin.P2, 1)
-    pins.digitalWritePin(DigitalPin.P5, 1)
-    pins.digitalWritePin(DigitalPin.P12, 1)
-    pins.digitalWritePin(DigitalPin.P13, 1)
-    pins.digitalWritePin(DigitalPin.P14, 1)
+    pins.analogWritePin(AnalogPin.P2, 1023)
+    pins.analogWritePin(AnalogPin.P5, 1023)
+    pins.analogWritePin(AnalogPin.P12, 1023)
+    pins.analogWritePin(AnalogPin.P13, 1023)
+    pins.analogWritePin(AnalogPin.P14, 1023)
+    pins.analogWritePin(AnalogPin.P1, 0)
 }
 function five () {
-    pins.digitalWritePin(DigitalPin.P1, 1)
-    pins.digitalWritePin(DigitalPin.P5, 1)
-    pins.digitalWritePin(DigitalPin.P12, 1)
-    pins.digitalWritePin(DigitalPin.P13, 1)
-    pins.digitalWritePin(DigitalPin.P14, 1)
+    pins.analogWritePin(AnalogPin.P1, 1023)
+    pins.analogWritePin(AnalogPin.P5, 1023)
+    pins.analogWritePin(AnalogPin.P12, 1023)
+    pins.analogWritePin(AnalogPin.P13, 1023)
+    pins.analogWritePin(AnalogPin.P14, 1023)
 }
 function four () {
-    pins.digitalWritePin(DigitalPin.P1, 1)
-    pins.digitalWritePin(DigitalPin.P5, 1)
-    pins.digitalWritePin(DigitalPin.P2, 1)
-    pins.digitalWritePin(DigitalPin.P13, 1)
+    pins.analogWritePin(AnalogPin.P1, 1023)
+    pins.analogWritePin(AnalogPin.P5, 1023)
+    pins.analogWritePin(AnalogPin.P2, 1023)
+    pins.analogWritePin(AnalogPin.P13, 1023)
 }
 function two () {
-    pins.digitalWritePin(DigitalPin.P2, 1)
-    pins.digitalWritePin(DigitalPin.P12, 1)
-    pins.digitalWritePin(DigitalPin.P5, 1)
-    pins.digitalWritePin(DigitalPin.P14, 1)
-    pins.digitalWritePin(DigitalPin.P15, 1)
+    pins.analogWritePin(AnalogPin.P2, 1023)
+    pins.analogWritePin(AnalogPin.P12, 1023)
+    pins.analogWritePin(AnalogPin.P5, 1023)
+    pins.analogWritePin(AnalogPin.P14, 1023)
+    pins.analogWritePin(AnalogPin.P15, 1023)
+    pins.analogWritePin(AnalogPin.P13, 0)
 }
+basic.forever(function () {
+    if (trigger == 1 && input.pinIsPressed(TouchPin.P0)) {
+        clear_screen()
+        four()
+        basic.pause(1000)
+        three()
+        basic.pause(1000)
+        two()
+        basic.pause(1000)
+        one()
+        basic.pause(1000)
+        zero()
+        basic.pause(1000)
+    }
+    if (trigger == 0) {
+        clear_screen()
+    }
+})
 basic.forever(function () {
     pins.analogWritePin(AnalogPin.P8, 0)
     pins.analogWritePin(AnalogPin.P11, 0)
@@ -68,11 +94,5 @@ basic.forever(function () {
 	
 })
 basic.forever(function () {
-    if (trigger == 1 && input.pinIsPressed(TouchPin.P0)) {
-        pins.analogWritePin(AnalogPin.P1, 1023)
-        control.waitMicros(5000)
-    }
-    if (trigger == 0) {
-        pins.analogWritePin(AnalogPin.P1, 0)
-    }
+	
 })
